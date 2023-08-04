@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&amp;display=swap");
+* { font-family: "Mulish"; }
+
+body {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background: linear-gradient(355deg, #125ab6, #661667);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
+.form-container {
+    padding: 75px;
+    padding-top: 50px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+#register-button {
+    background: linear-gradient(355deg, #125ab6, #661667);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    color: #ffffff;
+    margin-top: 10px;
+    padding: 10px;
+    width: 300px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+#register-button:hover {
+    color: linear-gradient(to top, #09203f 0%, #537895 100%);
+    box-shadow: 0 5px 15px #661667;
+}
+
+.login-text {
+    text-decoration: none;
+}
+
+.login-text:hover {
+    text-decoration-line: underline;
+}

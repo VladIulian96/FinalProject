@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fragments/header.css}">
+  <title>Home</title>
+</head>
+
+<body>
+
+<div th:fragment="header">
+  <nav class="navbar navbar-expand navbar-dark">
+    <div class="container-fluid">
+      <a href="/home" class="navbar-brand" id="navbar-logo">Home</a>
+
+      <ul class="navbar-nav">
+        <li class="nav-item px-4">
+          <a href="/cart" class="nav-link"><i class='bx bx-cart bx-sm bx-fw'></i></i>Cart</a>
+        </li>
+        <li class="nav-item px-4">
+          <a href="/wishlist" class="nav-link"><i class='bx bx-heart bx-sm bx-fw'></i>Wishlist</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a href="/account" class="nav-link"><i class="bi bi-person"> </i>Account</a>
+        </li> -->
+
+        <li class="nav-item dropdown px-4" id="account-dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class='bx bx-user bx-sm bx-fw'></i>Account</a>
+          <ul class="dropdown-menu">
+            <!-- <li><a href="@{/login}" class="dropdown-item">Login</a></li>
+            <li><a href="@{/register}" class="dropdown-item">Register</a></li> -->
+
+            <!--      <li><a href="/account" class="dropdown-item">Logged in as: <strong>Vlad Iulian</strong></a></li>-->
+
+
+            <div th:if="${currentLoggedUser != null}">
+              <li>
+                <a href="/account" th:text="'Logged in as: ' + ${currentLoggedUser.getUsername()}" class="dropdown-item"></a>
+              </li>
+
+              <li>
+                <a th:href="@{/logout}" class="dropdown-item">Logout</a>
+              </li>
+            </div>
+
+            <div th:if="${currentLoggedUser == null}">
+              <!--            <li th:text="'Login OFDJSAFIAJI'" class="dropdown-item"></li>-->
+              <li>
+                <a href="/login" class="dropdown-item">Login</a>
+              </li>
+
+              <li>
+                <a href="/register" class="dropdown-item">Register</a>
+              </li>
+            </div>
+
+          </ul>
+        </li>
+
+
+        <li class="nav-item px-4">
+          <a href="/about" class="nav-link"><i class='bx bx-info-circle bx-sm bx-fw'></i>About</a>
+        </li>
+
+
+        <!--      <li class="nav-item">-->
+        <!--        <a href="/adminPanel" class="nav-link" style="color: purple; font-weight: bold;"><i class='bx bx-shield-alt-2 bx-sm bx-fw'></i>Admin Panel</a>-->
+        <!--      </li>-->
+
+        <li class="nav-item px-4" id="admin-panel-link" th:if="${currentLoggedUser != null and currentLoggedUser.getRole().getName() == 'ADMIN'}">
+          <a href="/adminPanel" class="nav-link"><i class='bx bx-shield-alt-2 bx-sm bx-fw'></i>Admin Panel</a>
+        </li>
+
+
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>

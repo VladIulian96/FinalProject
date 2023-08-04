@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}">
+    <title>About</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" id="background">
+    <h1 style="color: #7700ff; font-weight: 900;">Account information</h1>
+
+    <div th:if="${currentLoggedUser != null}">
+        <h2 style="color: gray;">USERNAME: <strong  style="color: white;" th:text="${currentLoggedUser.getUsername()}"></strong> </h2>
+        <h2 style="color: gray;">EMAIL: <strong  style="color: white;" th:text="${currentLoggedUser.getEmail()}"></strong></h2>
+        <h2 style="color: gray;">ROLE: <strong  style="color: white;" th:text="${currentLoggedUser.getRole().getName()}"></strong> </h2>
+    </div>
+
+    <div class="container text-center">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" class="logoutButton"/>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

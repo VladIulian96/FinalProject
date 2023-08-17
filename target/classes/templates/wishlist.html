@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/wishlist.css}">
+    <title>Wishlist</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div th:if="message != null" class="container-fluid">
+    <p th:text="${message}"></p>
+</div>
+
+<div class="container-fluid text-center" style="color: white;">
+    <h1>Wishlist</h1>
+</div>
+
+<div th:if="${wishlistItems != null}" class="container-fluid bg-trasparent my-4 p-3" style="position: relative;" id="products-cards">
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+
+        <div th:each="item : ${wishlistItems}">
+            <div class="col">
+                <div class="card h-100">
+<!--                    <a th:href="@{/product(id=${product.getId()})}"> <img th:src="@{${item.getProduct().getPhotosImagePath()}}" class="card-img-top" alt="..."> </a>-->
+                    <a th:href="@{/product(id=${item.getProduct().getId()})}"> <img th:src="@{${item.getProduct().getPhotosImagePath()}}" class="card-img-top" alt="..."> </a>
+                    <div class="card-body">
+                        <a th:href="@{/product(id=${item.getProduct().getId()})}" style="text-decoration: none;"> <h5 class="card-title" th:text="${item.getProduct().title}" style="color: #661667; font-weight: 600;"></h5> </a>
+                        <div class="clearfix"> <span class="price-hp" th:text="${item.getProduct().getPrice()} + ' lei'" style="color: #5900a1;"></span> </div>
+                        <div>
+                            <a href="#" class="btn btn-warning">Add to cart</a>
+                            <a th:href="@{/wishlist/remove(id=${item.getProduct().getId()})}" class="btn btn-danger"> <i class="bi bi-x-circle"></i> </a>
+<!--                            <a th:href="@{/wishlist/add(id=${product.getId()})}" class="btn btn-warning"> <i class="bi bi-heart"></i> </a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:if="${wishlistItems == null}" class="container-fluid text-center" style="color: white;">
+    <h1>Your wishlist is empty!</h1>
+</div>
+
+<!--<div th:if="${wishlistItems != null}" class="container-fluid d-flex justify-content-center">-->
+<!--    <table class="table w-auto">-->
+
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Image</th>-->
+<!--            <th>Title</th>-->
+<!--            <th>Price</th>-->
+<!--            <th>Stock</th>-->
+<!--            <th>UID</th>-->
+<!--            <th></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+
+<!--        <tbody>-->
+<!--        <tr th:each="item : ${wishlistItems}">-->
+<!--            <td th:text="${item.getId()}"></td>-->
+<!--            <td>-->
+<!--                <img th:src="@{${item.getProduct().getPhotosImagePath()}}" style="width: 100px; height: 75px">-->
+<!--            </td>-->
+<!--            <td th:text="${item.getProduct().getTitle()}"></td>-->
+<!--            <td th:text="${item.getProduct().getPrice()}"></td>-->
+<!--            <td th:text="${item.getProduct().getStock()}"></td>-->
+<!--            <td th:text="${item.getProduct().getUid()}"></td>-->
+<!--&lt;!&ndash;            <td style="min-width:138px;">&ndash;&gt;-->
+<!--            <td>-->
+<!--                <a class="delete-button"><i class="bi bi-x-circle"></i></a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+</body>
+</html>

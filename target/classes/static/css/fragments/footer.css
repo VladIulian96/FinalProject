@@ -1,0 +1,7 @@
+#footer-x {
+    margin-top: 150px;
+    border-top: 2px white solid;
+    box-shadow: 0 5px 30px #7700ff;
+    color: white;
+    /* background-image: linear-gradient(to left bottom, #ffffff, #ddd2ff, #bfa5ff, #a375ff, #883dff); */
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/usersPanel.css}">
+    <title>Home</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" style="margin-top: 20px;">
+    <h1 class="manage-users-text text-center" style="color: white">Manage Users</h1>
+    <h1 class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#create-user-modal" class="add-user-text">Add new user</a></h1>
+
+    <div th:if="${message != null}" class="alert alert-danger" style="width: 312px; height: 45px; padding: 10px; margin: 0px; margin-left: auto; margin-right: auto; margin-top: 20px;" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+
+    <div th:if="${successMessage != null}" class="alert alert-success" style="width: fit-content; height: 45px; padding: 10px; margin: 0px; margin-left: auto; margin-right: auto; margin-top: 20px;" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <div th:if="${warningMessage != null}" class="alert alert-warning" style="width: fit-content; height: 45px; padding: 10px; margin: 0px; margin-left: auto; margin-right: auto; margin-top: 20px;" role="alert">
+        <p th:text="${warningMessage}"></p>
+    </div>
+</div>
+
+<div th:if="${users != null}" class="container d-flex justify-content-center">
+    <table class="table w-auto">
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getUsername()}"></td>
+            <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getRole().getName()}"></td>
+            <td>
+<!--                <a class="btn btn-primary editUserButton">Edit</a>-->
+<!--                <a th:href="@{/usersPanel/update_user(userId=${user.getId()})}" class="edit-button" id="editbutton" data-bs-toggle="modal" data-bs-target="#edit-user-modal">EDIT</a>-->
+<!--                <a th:href="@{/usersPanel/update_User(userId=${user.getId()})}" class="edit-button" data-bs-toggle="modal" data-bs-target="#update-user-modal">EDIT</a>-->
+<!--                <button type="button" class="edit-button" data-bs-toggle="modal" data-bs-target="#update-user-modal" th:attr="data-id=${user.id}" th:onclick="'javascript:fetchUser(' + ${user.id} + ')';">EDIT</button>-->
+
+<!--                <a th:href="@{/adminPanel/user/delete_user/{id}(id=${user.id})}" class="delete-button">DELETE</a>-->
+                <a th:href="@{/adminPanel/user/{id}(id=${user.id})}" class="edit-button">EDIT</a>
+                <a th:href="@{/adminPanel/user/delete_user(id=${user.getId()})}" class="delete-button">DELETE</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="create-user-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+<!--                    <h1 class="text-center" th:text="'Editing user: ' + ${selectedUser.getUsername()}"></h1>-->
+                <h1>Creating a new user</h1>
+                <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#create-user-modal"></button>
+            </div>
+
+<!--            <form th:action="@{/usersPanel/create_user}" method="post" class="form-container" novalidate>-->
+            <form th:action="@{/adminPanel/user/create_user}" method="post" class="form-container" novalidate>
+                <div class="container text-center d-flex align-items-center justify-content-center">
+                    <div class="modal-body">
+                        <div class="form-floating mx-auto mb-3">
+                            <input type="text" name="username" class="form-control" placeholder="username" style="width: 300px;" minlength="4" maxlength="35" required>
+                            <label for="username">Username</label>
+                        </div>
+
+                        <div class="form-floating mx-auto mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="email" style="width: 300px;" minlength="5" maxlength="40" required>
+                            <label for="email">Email</label>
+                        </div>
+
+                        <div class="form-floating mx-auto mb-3">
+                            <input type="text" name="password" class="form-control" placeholder="password" style="width: 300px;" minlength="4" maxlength="25" required>
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="form-floating mx-auto mb-2">
+                            <select name="role" class="form-select" id="role" style="width: inherit" required>
+                                <option value="">Select Role</option>
+                                <option value="1">USER</option>
+                                <option value="2">ADMIN</option>
+                            </select>
+                            <label for="role" class="form-label">Role</label>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit" id="create-user-button">Create User</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--<div class="modal fade" id="update-user-modal">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+
+<!--            <div class="modal-header">-->
+<!--                &lt;!&ndash;                    <h1 class="text-center" th:text="'Editing user: ' + ${selectedUser.getUsername()}"></h1>&ndash;&gt;-->
+<!--                <h1>Editing user</h1>-->
+<!--                <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#update-user-modal"></button>-->
+<!--            </div>-->
+
+<!--            <form th:action="@{/adminPanel/user}" method="post"  class="form-container" novalidate>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="mb-3">-->
+<!--                        <label for="username" class="form-label">Username</label>-->
+<!--&lt;!&ndash;                        <input type="text" name="username"class="form-control" id="username" minlength="4" maxlength="30" required>&ndash;&gt;-->
+<!--                        <input type="text" name="username" class="form-control" id="username" minlength="4" maxlength="30" required>-->
+<!--                    </div>-->
+
+<!--                    <div class="mb-3">-->
+<!--                        <label for="email" class="form-label">Email address</label>-->
+<!--                        <input type="email" name="email" class="form-control" id="email" minlength="5" maxlength="20" required>-->
+<!--                    </div>-->
+
+<!--                    <div class="mb-3">-->
+<!--                        <label for="password" class="form-label">Password</label>-->
+<!--                        <input type="text" name="password" class="form-control" id="password" minlength="4" maxlength="15" required>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash;                        <div class="form-floating mx-auto mb-2 text-center">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <input type="text" name="username" class="form-control" placeholder="username" style="width: 250px;" required>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <label for="username">Username</label>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                        <div class="form-floating mx-auto mb-2">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <input type="email" name="email" class="form-control" placeholder="email" style="width: 250px;" required>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <label for="email">Email</label>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                        <div class="form-floating mx-auto mb-2">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <input type="text" name="password" class="form-control" placeholder="password" style="width: 250px;" required>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <label for="password">Password</label>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+
+<!--                    <label for="role" class="form-label">Role</label>-->
+<!--                    <select name="role" class="form-select" id="role" required>-->
+<!--                        <option value="">Select Role</option>-->
+<!--                        <option value="1">USER</option>-->
+<!--                        <option value="2">ADMIN</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+
+<!--                <div class="modal-footer mx-auto">-->
+<!--                    <button class="btn btn-primary" type="submit">Create User</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script>
+    const form = document.querySelector("form")
+
+    form.addEventListener('submit', e => {
+        if(!form.checkValidity()) {
+            e.preventDefault()
+        }
+        form.classList.add('was-validated')
+    })
+</script>
+
+</body>
+</html>

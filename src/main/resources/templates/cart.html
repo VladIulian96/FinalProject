@@ -33,10 +33,16 @@
 
                 <tr th:each="item : ${cartItems}">
                     <td>
-                        <img th:src="@{${item.getProduct().getPhotosImagePath()}}" style="width: 150px; height: 125px">
+                        <a th:href="@{/product(id=${item.getProduct().getId()})}"><img th:src="@{${item.getProduct().getPhotosImagePath()}}" style="width: 150px; height: 125px"></a>
                     </td>
-                    <td th:text="${item.getProduct().getTitle()}"></td>
-                    <td th:text="${item.getProduct().getPrice() + ' lei'}" style="width: 10%;"></td>
+                    <td>
+                        <a th:href="@{/product(id=${item.getProduct().getId()})}" th:text="${item.getProduct().getTitle()}" style="text-decoration: none; color: black;"></a>
+                    </td>
+
+                    <td style="width: 10%;">
+                        <p th:text="${item.getProduct().getPrice() + ' lei'}"></p>
+                    </td>
+
                     <td style="width: 15%;">
                         <a th:href="@{/wishlist/add(id=${item.getProduct().getId()})}" class="btn btn-warning"> <i class="bi bi-heart"></i> </a>
                         <a th:href="@{/cart/remove(id=${item.getProduct().getId()})}" class="btn btn-danger"> <i class="bi bi-x-circle"></i> </a>

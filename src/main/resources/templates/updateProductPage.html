@@ -18,7 +18,7 @@
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container d-flex align-items-center justify-content-center lg" style="height:100vh;">
+<div class="container d-flex align-items-center justify-content-center lg pb-5">
     <form th:action="@{/adminPanel/product/save/{id} (id=${product.id})}" th:object="${product}" method="post" enctype="multipart/form-data" class="form-container" novalidate>
         <div class="container" id="updateProductPage-text">
             <!--      <p style="color: black;" >Editing user:</p>-->

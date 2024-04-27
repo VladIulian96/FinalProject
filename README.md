@@ -1,4 +1,4 @@
-# FinalProject
+# E-Commerce project
 
 Project preview
 
